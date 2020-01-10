@@ -5,8 +5,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
+@SQLDelete(sql="update user SET deleted = true WHERE id =? ")
+@Where(clause ="deleted = false")
 public class User {
 	@Id
 	@GeneratedValue
@@ -31,6 +36,11 @@ public class User {
 	private int mobileNumber;
 	
 	
+    private boolean  deleted;
+	
+	
+	
+		
 	/*
 	 * public User() {
 	 * 
@@ -38,9 +48,19 @@ public class User {
 	 * }
 	 */
 	
+	
 	public String getFirstName() {
 		return firstName;
 	}
+	
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}

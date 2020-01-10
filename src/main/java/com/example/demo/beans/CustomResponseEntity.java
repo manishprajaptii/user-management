@@ -1,10 +1,9 @@
-package com.example.demo.exceptionhandler;
+package com.example.demo.beans;
 
 import java.time.LocalDateTime;
 
 import org.springframework.http.HttpStatus;
 
-import com.example.demo.beans.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class CustomResponseEntity {

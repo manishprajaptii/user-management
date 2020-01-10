@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -20,7 +21,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	
 	 
-	 @Override
+	    @Override
 	    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 	                                                                  HttpHeaders headers,
 	                                                                  HttpStatus status, WebRequest request) {
@@ -40,6 +41,16 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
 	        return new ResponseEntity<>(body, headers, status);
 
+	    }
+	    
+	    @ExceptionHandler(DataNotFoundException.class)
+	    protected ResponseEntity<Object> handleNoData(RuntimeException exception, WebRequest request){
+	    	return new ResponseEntity<Object>(exception.getMessage(), HttpStatus.NOT_FOUND);
+	    }
+	    
+	    @ExceptionHandler(InsertionException.class)
+	    protected ResponseEntity<Object> handleDuplicateData(RuntimeException exception, WebRequest request){
+	    	return new ResponseEntity<Object>(exception.getMessage(), HttpStatus.CONFLICT);
 	    }
 	
 	  
